@@ -1,0 +1,12 @@
+# Hernoem dit bestand naar .gitignore (met punt, zonder .txt) voor de eerste commit
+
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
+.vercel/
+data/raw/
+scripts/cache/
+.DS_Store
+*.log
