@@ -1,6 +1,6 @@
-import { createRegistry } from "@/motor";
+import { createRegistry, type CategorieContract, type Fase } from "@/motor";
 import type { NavItem } from "@/motor/components/SiteNav";
-import { voorbeeldCategorie } from "./categories/voorbeeld-categorie";
+import { categorieen } from "./categories";
 
 /**
  * Configuratielaag: alle projectwoorden en concrete keuzes staan hier, niet in de
@@ -17,12 +17,19 @@ export const siteConfig = {
 } as const;
 
 /**
- * De categorie-registry voor de hele site. Hier worden categorieën geregistreerd;
- * de motor genereert er automatisch menu-items, tegels en pagina's uit. Voorlopig
- * staat alleen de voorbeeldcategorie geregistreerd (bewijs van het stramien).
+ * De categorie-registry voor de hele site. De zes startcategorieën worden hier
+ * geregistreerd; de motor genereert er automatisch menu-items, tegels en pagina's
+ * uit. Registreren valideert tegen het contract (Zod).
  */
 export const categorieRegistry = createRegistry();
-categorieRegistry.register(voorbeeldCategorie);
+for (const categorie of categorieen) {
+  categorieRegistry.register(categorie);
+}
+
+/** Categorieën die (mede) in een bepaalde fase relevant zijn. */
+export function categorieenInFase(fase: Fase): CategorieContract[] {
+  return categorieRegistry.all().filter((c) => c.fases.includes(fase));
+}
 
 /** Vaste menu-items, los van de categorieën. */
 const basisNav: NavItem[] = [
@@ -31,12 +38,9 @@ const basisNav: NavItem[] = [
 ];
 
 /**
- * Volledige navigatie = de geregistreerde categorieën (automatisch uit de
- * registry) plus de vaste items. Registreer een categorie en ze staat in het menu.
+ * Volledige navigatie = één ingang naar alle zorgverleners plus de vaste items.
+ * (De categorieën zelf staan gegroepeerd per fase op de homepage.)
  */
 export function hoofdNav(): NavItem[] {
-  const categorieItems: NavItem[] = categorieRegistry
-    .all()
-    .map((c) => ({ label: c.naam, href: `/${c.slug}` }));
-  return [...categorieItems, ...basisNav];
+  return [{ label: "Zorgverleners", href: "/zorgverleners" }, ...basisNav];
 }

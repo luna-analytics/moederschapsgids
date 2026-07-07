@@ -38,9 +38,16 @@ export const categorieContractSchema = z.object({
   naam: z.string().min(1),
   omschrijving: z.string().min(1),
   fases: z.array(z.enum(FASES)).min(1),
-  vergoeding: vergoedingSchema,
-  hoeKiesJe: z.array(z.string().min(1)).min(1),
-  bron: z.string().min(1),
+  /**
+   * Vergoeding en "hoe kies je" zijn de redactionele contract-onderdelen die pas
+   * via de pipeline worden ingevuld en door M worden goedgekeurd (zorgclaims
+   * alleen met bron, anders niet live). Daarom optioneel: een categorie mag
+   * geregistreerd en gelijst worden vóór die tekst er is. Is vergoeding wél
+   * aanwezig, dan dwingt het schema de bronvermelding af.
+   */
+  vergoeding: vergoedingSchema.optional(),
+  hoeKiesJe: z.array(z.string().min(1)).min(1).optional(),
+  bron: z.string().min(1).optional(),
   volgorde: z.number().int().nonnegative(),
 });
 

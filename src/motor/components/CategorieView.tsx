@@ -1,6 +1,6 @@
 import type { CategorieContract } from "../contract";
 
-const vergoedingLabel: Record<CategorieContract["vergoeding"]["status"], string> = {
+const vergoedingLabel: Record<NonNullable<CategorieContract["vergoeding"]>["status"], string> = {
   ja: "Wordt vergoed",
   nee: "Wordt niet vergoed",
   soms: "Soms vergoed",
@@ -23,33 +23,39 @@ export function CategorieView({ categorie }: { categorie: CategorieContract }) {
         {categorie.omschrijving}
       </p>
 
-      <section className="mt-10 border-t border-zand pt-6">
-        <h2 className="font-display text-2xl text-antraciet">Vergoeding</h2>
-        <p className="mt-2 font-body text-antraciet/90">
-          <span className="font-medium">
-            {vergoedingLabel[categorie.vergoeding.status]}.
-          </span>{" "}
-          {categorie.vergoeding.toelichting}
-        </p>
-        <p className="mt-1 font-body text-sm text-antraciet/70">
-          Bron: {categorie.vergoeding.bron}
-        </p>
-      </section>
+      {categorie.vergoeding && (
+        <section className="mt-10 border-t border-zand pt-6">
+          <h2 className="font-display text-2xl text-antraciet">Vergoeding</h2>
+          <p className="mt-2 font-body text-antraciet/90">
+            <span className="font-medium">
+              {vergoedingLabel[categorie.vergoeding.status]}.
+            </span>{" "}
+            {categorie.vergoeding.toelichting}
+          </p>
+          <p className="mt-1 font-body text-sm text-antraciet/70">
+            Bron: {categorie.vergoeding.bron}
+          </p>
+        </section>
+      )}
 
-      <section className="mt-10 border-t border-zand pt-6">
-        <h2 className="font-display text-2xl text-antraciet">
-          Hoe kies je een goede aanbieder?
-        </h2>
-        <ul className="mt-3 list-disc space-y-2 pl-5 font-body text-antraciet/90">
-          {categorie.hoeKiesJe.map((punt) => (
-            <li key={punt}>{punt}</li>
-          ))}
-        </ul>
-      </section>
+      {categorie.hoeKiesJe && categorie.hoeKiesJe.length > 0 && (
+        <section className="mt-10 border-t border-zand pt-6">
+          <h2 className="font-display text-2xl text-antraciet">
+            Hoe kies je een goede aanbieder?
+          </h2>
+          <ul className="mt-3 list-disc space-y-2 pl-5 font-body text-antraciet/90">
+            {categorie.hoeKiesJe.map((punt) => (
+              <li key={punt}>{punt}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      <p className="mt-10 border-t border-zand pt-6 font-body text-sm text-antraciet/70">
-        Bron: {categorie.bron}
-      </p>
+      {categorie.bron && (
+        <p className="mt-10 border-t border-zand pt-6 font-body text-sm text-antraciet/70">
+          Bron: {categorie.bron}
+        </p>
+      )}
     </article>
   );
 }

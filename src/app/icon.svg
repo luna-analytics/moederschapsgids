@@ -1,0 +1,10 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Moederschapsgids">
+  <!-- Brandkleuren uit tokens.ts. Vereenvoudigde omarming: twee sage vormen rond
+       een terracotta figuur op linnen. Placeholder tot M transparante/SVG-logo's
+       levert (de brandbook voorziet die exports). -->
+  <rect width="32" height="32" rx="6" fill="#F5F0E8"/>
+  <path d="M9 6 C5 12 5 21 11 25 C8 19 9 13 13 10 C11 8 10 7 9 6 Z" fill="#8A9A7B"/>
+  <path d="M23 6 C27 12 27 21 21 25 C24 19 23 13 19 10 C21 8 22 7 23 6 Z" fill="#8A9A7B"/>
+  <path d="M16 11 C13.5 13 13 17 15 23 C15.5 24.5 16.5 24.5 17 23 C19 17 18.5 13 16 11 Z" fill="#C4744F"/>
+  <circle cx="16" cy="9.5" r="2.6" fill="#C4744F"/>
+</svg>
