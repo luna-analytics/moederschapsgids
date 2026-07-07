@@ -1,0 +1,38 @@
+name: CI
+
+# Bij elke push en pull request: lint, typecheck, tests en een productie-build.
+# Een rode build gaat niet live (spelregel: fundering en kwaliteit).
+on:
+  push:
+  pull_request:
+
+jobs:
+  kwaliteit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+        # Placeholder-env: de build haalt (nog) geen echte data op, maar de Zod-
+        # env-validatie en Supabase-clients verwachten wel geldige waarden.
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
+          NEXT_TELEMETRY_DISABLED: "1"

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Dun haarlijn-kader als scheiding, nooit slagschaduw. */
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-linnen text-antraciet font-body antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+    /* De zachte snit van Fraunces (brandbook: 'SOFT' 100, 'WONK' 1). */
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+
+  /* Toegankelijkheid: altijd een zichtbare focus-staat (WCAG AA). */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-terracotta-donker;
+    outline-style: solid;
+  }
+}

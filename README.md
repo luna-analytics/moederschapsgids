@@ -25,5 +25,35 @@ Bouw nog niets."
 - `copy/` — over-pagina, FAQ zorgverleners, e-mailtemplates
 - `juridisch/` — concept algemene voorwaarden en privacyverklaring (jurist-check nodig)
 - `scripts/` — scraping- en geocodingscripts, komt in fase 4
-- Rest van de code (app, components, migrations) ontstaat vanaf fase 1,
-  gebouwd door Claude Code, niet vooraf aangemaakt
+- `src/` — de code: `motor/` (contract, registry, generieke componenten, nul
+  projectwoorden), `config/` (tokens, site.config, categorieën), `lib/`
+  (Supabase-clients, env-validatie), `app/` (Next.js App Router)
+- `supabase/` — `config.toml`, `migrations/` en `seed.sql`
+
+## Lokaal draaien
+
+1. `npm install`
+2. Kopieer de env-namen (zie hieronder) naar `.env.local` en vul je eigen waarden
+   in — `.env.local` staat in `.gitignore` en wordt nooit gecommit.
+3. Database lokaal (vereist Docker): `npm run db:start` en dan `npm run db:reset`
+   (past de migrations toe en laadt `supabase/seed.sql`).
+4. `npm run dev` en open http://localhost:3000
+5. Kwaliteitschecks (draaien ook in CI bij elke push): `npm run lint`,
+   `npm run typecheck`, `npm run test`, `npm run build`.
+
+## Omgevingsvariabelen (alleen namen, nooit waarden)
+
+Zet deze in `.env.local` (lokaal) en in Vercel (productie):
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` — alleen server-side, nooit naar de browser
+- `ADMIN_EMAIL`
+- `NEXT_PUBLIC_SITE_NAME` — merknaam; wijzigen = 1 regel
+- `NEXT_PUBLIC_SITE_URL`
+- `RESEND_API_KEY` — transactionele mail (vanaf Blok 4)
+
+## Code (ontstaat vanaf fase 1)
+
+De code (`src/`, `supabase/`) wordt door Claude Code gebouwd, niet vooraf
+aangemaakt.
